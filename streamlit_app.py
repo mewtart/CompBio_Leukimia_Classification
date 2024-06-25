@@ -35,20 +35,29 @@ def predict_image(model, uploaded_file):
 
 def main():
     st.header('Leukemia Classification', divider='red')
+
+    if 'model_name' not in st.session_state:
+        st.session_state.model_name = None
+        st.session_state.model = None
+
     model_name = st.selectbox("Select a Model", options=list(MODEL_PATHS.keys()))
-    if model_name:
+    
+    if model_name != st.session_state.model_name:
+        if st.session_state.model is not None:
+            del st.session_state.model
+            tf.keras.backend.clear_session()
+
+        st.session_state.model_name = model_name
         model_path = MODEL_PATHS[model_name]
-        model = load_model(model_path)
-        input_image = st.file_uploader(f'Upload bmp file for {model_name}', type='bmp', key=model_name)
-        if input_image is not None:
-            try:
-                predicted_label = predict_image(model, input_image)
-                st.write(f'The predicted label: {predicted_label}')
-            except Exception as e:
-                st.error(f"Error processing the image: {e}")
-            finally:
-                del model
-                tf.keras.backend.clear_session()
+        st.session_state.model = load_model(model_path)
+
+    input_image = st.file_uploader(f'Upload bmp file for {model_name}', type='bmp', key=model_name)
+    if input_image is not None:
+        try:
+            predicted_label = predict_image(st.session_state.model, input_image)
+            st.write(f'The predicted label: {predicted_label}')
+        except Exception as e:
+            st.error(f"Error processing the image: {e}")
 
 if __name__ == '__main__':
     main()
