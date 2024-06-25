@@ -12,10 +12,10 @@ def load_model(model_path):
     return tf.keras.models.load_model(model_path)
 
 MODEL_PATHS = {
-    # "VGG16": './VGG16/vgg16-vgg16-89.94.h5',
-    # "ResNet50": './ResNet/resnet50-resNet-95.63.h5',
-    # "DenseNet121": './DenseNet/densenet121-denseNet-91.62.h5',
-    # "AlexNet": './AlexNet/sequential-alexNet-68.19.h5',
+    "VGG16": './VGG16/vgg16-vgg16-89.94.h5',
+    "ResNet50": './ResNet/resnet50-resNet-95.63.h5',
+    "DenseNet121": './DenseNet/densenet121-denseNet-91.62.h5',
+    "AlexNet": './AlexNet/sequential-alexNet-68.19.h5',
     "EfficientNet": './EfficientNet/efficientnetb3-efficientNet.h5'
 }
 
