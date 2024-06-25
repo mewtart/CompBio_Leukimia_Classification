@@ -4,20 +4,20 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
 
-# Constants
 IMG_SIZE = (224, 224)
 CLASS_LABELS = ['NORMAL', 'HEMM']
 
-# Load models
 @st.cache_resource
 def load_model(model_path):
     return tf.keras.models.load_model(model_path)
 
-VGG16_model = load_model('./VGG16/vgg16-vgg16-89.94.h5')
-ResNet50_model = load_model('./ResNet/resnet50-resNet-95.63.h5')
-DenseNet121_model = load_model('./DenseNet/densenet121-denseNet-91.62.h5')
-AlexNet_model = load_model('./AlexNet/sequential-alexNet-68.19.h5')
-EfficientNet_model = load_model('./EfficientNet/efficientnetb3-efficientNet.h5')
+MODEL_PATHS = {
+    "VGG16": './VGG16/vgg16-vgg16-89.94.h5',
+    "ResNet50": './ResNet/resnet50-resNet-95.63.h5',
+    "DenseNet121": './DenseNet/densenet121-denseNet-91.62.h5',
+    "AlexNet": './AlexNet/sequential-alexNet-68.19.h5',
+    "EfficientNet": './EfficientNet/efficientnetb3-efficientNet.h5'
+}
 
 def load_and_preprocess_image(uploaded_file, img_size):
     img = image.load_img(uploaded_file, target_size=img_size)
@@ -35,26 +35,20 @@ def predict_image(model, uploaded_file):
 
 def main():
     st.title('Leukemia Classification')
+
+    model_name = st.selectbox("Select a Model", options=list(MODEL_PATHS.keys()))
     
-    tabs = st.tabs(["VGG16 Model", "ResNet50 Model", "DenseNet121 Model", "AlexNet Model", "EfficientNet Model"])
+    if model_name:
+        model_path = MODEL_PATHS[model_name]
+        model = load_model(model_path)
 
-    models = {
-        "VGG16 Model": VGG16_model,
-        "ResNet50 Model": ResNet50_model,
-        "DenseNet121 Model": DenseNet121_model,
-        "AlexNet Model": AlexNet_model,
-        "EfficientNet Model": EfficientNet_model,
-    }
-
-    for tab, (model_name, model) in zip(tabs, models.items()):
-        with tab:
-            input_image = st.file_uploader(f'Upload bmp file for {model_name}', type='bmp', key=model_name)
-            if input_image is not None:
-                try:
-                    predicted_label = predict_image(model, input_image)
-                    st.write(f'The predicted label: {predicted_label}')
-                except Exception as e:
-                    st.error(f"Error processing the image: {e}")
+        input_image = st.file_uploader(f'Upload bmp file for {model_name}', type='bmp', key=model_name)
+        if input_image is not None:
+            try:
+                predicted_label = predict_image(model, input_image)
+                st.write(f'The predicted label: {predicted_label}')
+            except Exception as e:
+                st.error(f"Error processing the image: {e}")
 
 if __name__ == '__main__':
     main()
