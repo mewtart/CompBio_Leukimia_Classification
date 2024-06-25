@@ -4,7 +4,6 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.imagenet_utils import preprocess_input
 
-
 img_size = (224, 224)
 class_labels = ['NORMAL', 'HEMM']
 
