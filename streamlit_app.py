@@ -34,7 +34,7 @@ def predict_image(model, uploaded_file):
     return predicted_class_label
 
 def main():
-    st.title('Leukemia Classification')
+    st.header('Leukemia Classification', divider='red')
 
     model_name = st.selectbox("Select a Model", options=list(MODEL_PATHS.keys()))
     
