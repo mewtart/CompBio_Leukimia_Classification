@@ -16,15 +16,14 @@ The goal of this project is to build a robust classification model that can accu
 
 ### Methodology
 
-Data Preparation: Each image in the dataset was labeled and organized to ensure proper dataset structure for training, validation, and testing. The dataset was then split into training, validation, and testing sets using stratified sampling to maintain label proportions across the sets.
+- Data Preparation
+  Each image in the dataset was labeled and organized to ensure proper dataset structure for training, validation, and testing. The dataset was then split into training, validation, and testing sets using stratified sampling to maintain label proportions across the sets.
 
-Model Design and Training: Each CNN architecture was adapted with a transfer learning approach using pretrained weights, with modifications to optimize for this specific classification task. Models were designed to take 224x224 pixel images as input, and the final layer was adjusted to a binary classification with a softmax activation function to predict ALL or HEM.
+- Model Design and Training
+  Each CNN architecture was adapted with a transfer learning approach using pretrained weights, with modifications to optimize for this specific classification task. Models were designed to take 224x224 pixel images as input, and the final layer was adjusted to a binary classification with a softmax activation function to predict ALL or HEM.
 
-Evaluation Metrics: Each model was trained on the training set and evaluated on the validation set. The primary metrics used were:
-
-1. Accuracy: Overall performance metric for classification accuracy.
-2. Precision, Recall, and F1-score: To assess performance per class, particularly given the class imbalance.
-3. Confusion Matrix: To visualize the distribution of predictions across classes.
+- Evaluation Metrics
+  Each model was trained on the training set and evaluated on the validation set. The metrics used were aacuracy, precision, Recall, F1-score, and confusion matrix
 
 ### Results
 After training each architecture, we obtained the following results on the test set for each model:
